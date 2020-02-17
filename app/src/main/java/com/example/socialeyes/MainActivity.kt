@@ -5,37 +5,47 @@ import android.os.Bundle
 import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.socialeyes.Fragments.HomeFragment
+import com.example.socialeyes.Fragments.NotificationsFragment
+import com.example.socialeyes.Fragments.ProfileFragment
+import com.example.socialeyes.Fragments.SearchFragment
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var textView: TextView
+     internal var selectedFragemtnt: Fragment = HomeFragment();
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.nav_home -> {
-                textView.setText("Home")
+            R.id.nav_home ->
+            {
+                selectedFragemtnt = HomeFragment()
+            }
+            R.id.nav_search ->
+            {
+                selectedFragemtnt = SearchFragment()
+            }
+            R.id.nav_add_post ->
+            {
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.nav_search -> {
-                textView.setText("Search")
-                return@OnNavigationItemSelectedListener true
+            R.id.nav_notifications ->
+            {
+                selectedFragemtnt = NotificationsFragment()
             }
-            R.id.nav_add_post -> {
-                textView.setText("Add post")
-                return@OnNavigationItemSelectedListener true
+            R.id.nav_profile ->
+            {
+                selectedFragemtnt = ProfileFragment()
             }
-            R.id.nav_notifications -> {
-                textView.setText("Notifications")
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.nav_profile -> {
-                textView.setText("Profile")
-                return@OnNavigationItemSelectedListener true
-            }
+        }
+
+        if(selectedFragemtnt != null)
+        {
+            supportFragmentManager.beginTransaction().replace(R.id.fragment_container, selectedFragemtnt).commit();
         }
 
         false
@@ -47,8 +57,8 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
-        textView = findViewById(R.id.message)
-
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, HomeFragment()).commit()
     }
 }
