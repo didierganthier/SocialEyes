@@ -17,17 +17,17 @@ import com.example.socialeyes.Fragments.SearchFragment
 
 class MainActivity : AppCompatActivity() {
 
-     internal var selectedFragemtnt: Fragment = HomeFragment();
-
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.nav_home ->
             {
-                selectedFragemtnt = HomeFragment()
+                moveToFragment(HomeFragment())
+                return@OnNavigationItemSelectedListener true
             }
             R.id.nav_search ->
             {
-                selectedFragemtnt = SearchFragment()
+                moveToFragment(SearchFragment())
+                return@OnNavigationItemSelectedListener true
             }
             R.id.nav_add_post ->
             {
@@ -35,17 +35,14 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.nav_notifications ->
             {
-                selectedFragemtnt = NotificationsFragment()
+                moveToFragment(NotificationsFragment())
+                return@OnNavigationItemSelectedListener true
             }
             R.id.nav_profile ->
             {
-                selectedFragemtnt = ProfileFragment()
+                moveToFragment(ProfileFragment())
+                return@OnNavigationItemSelectedListener true
             }
-        }
-
-        if(selectedFragemtnt != null)
-        {
-            supportFragmentManager.beginTransaction().replace(R.id.fragment_container, selectedFragemtnt).commit();
         }
 
         false
@@ -59,6 +56,13 @@ class MainActivity : AppCompatActivity() {
 
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, HomeFragment()).commit()
+        moveToFragment(HomeFragment())
+    }
+
+    private fun moveToFragment(fragment: Fragment)
+    {
+        val fragmentTrans = supportFragmentManager.beginTransaction()
+        fragmentTrans.replace(R.id.fragment_container, fragment)
+        fragmentTrans.commit()
     }
 }
