@@ -72,7 +72,7 @@ class SignUpActivity : AppCompatActivity() {
 
         val userMap = HashMap<String, Any>()
         userMap["uid"] = currentUserID
-        userMap["fullname"] = fullName
+        userMap["fullname"] = fullName.toLowerCase()
         userMap["username"] = userName
         userMap["email"] = email
         userMap["bio"] = "Hey I'm using SocialEyes"
