@@ -69,7 +69,7 @@
         android:layout_below="@id/profile_image_view_profile_frag"/>
 
     <EditText
-        android:id="@+id/full_name_profile_frag"
+        android:id="@+id/full_name_profile_settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -80,7 +80,7 @@
         android:layout_below="@id/change_image_text_btn"/>
 
     <EditText
-        android:id="@+id/username_profile_frag"
+        android:id="@+id/username_profile_settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -88,7 +88,7 @@
         android:layout_marginTop="16dp"
         android:inputType="text"
         android:hint="Username"
-        android:layout_below="@id/full_name_profile_frag"/>
+        android:layout_below="@id/full_name_profile_settings"/>
 
     <EditText
         android:id="@+id/bio_profile_frag"
@@ -99,7 +99,7 @@
         android:layout_marginTop="16dp"
         android:inputType="text"
         android:hint="Write your bio here..."
-        android:layout_below="@id/username_profile_frag"/>
+        android:layout_below="@id/username_profile_settings"/>
 
     <Button
         android:id="@+id/logout_btn"
