@@ -48,7 +48,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image_view_profile_frag"
+        android:id="@+id/profile_image_view_settings"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_marginTop="15dp"
@@ -66,7 +66,7 @@
         android:textStyle="bold"
         android:textSize="16sp"
         android:textColor="@color/colorPrimary"
-        android:layout_below="@id/profile_image_view_profile_frag"/>
+        android:layout_below="@id/profile_image_view_settings"/>
 
     <EditText
         android:id="@+id/full_name_profile_settings"
@@ -91,7 +91,7 @@
         android:layout_below="@id/full_name_profile_settings"/>
 
     <EditText
-        android:id="@+id/bio_profile_frag"
+        android:id="@+id/bio_profile_settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"

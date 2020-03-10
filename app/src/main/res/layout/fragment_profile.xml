@@ -189,16 +189,16 @@
                     android:id="@+id/full_name_profile_frag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Didier Peran Ganthier"
+                    android:text="fullname"
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:textColor="@android:color/black"/>
 
                 <TextView
-                    android:id="@+id/bio_profile"
+                    android:id="@+id/bio_profile_frag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="I can do all things..."
+                    android:text="Hey this is my bio"
                     android:textSize="13sp"
                     android:textColor="@android:color/black"/>
 
