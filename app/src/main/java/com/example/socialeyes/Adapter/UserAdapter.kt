@@ -28,16 +28,16 @@ class UserAdapter (private var mContext: Context,
                    private var isFragnent: Boolean = false): RecyclerView.Adapter<UserAdapter.ViewHolder>()
 {
     private var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(mContext).inflate(R.layout.user_item_layout, parent, false)
-        return UserAdapter.ViewHolder(view)
+        return ViewHolder(view)
     }
 
     override fun getItemCount(): Int {
         return mUser.size
     }
 
-    override fun onBindViewHolder(holder: UserAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val user = mUser[position]
         holder.usernameTextView.text = user.getUsername()
