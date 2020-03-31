@@ -1,6 +1,7 @@
 package com.example.socialeyes.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
+import com.example.socialeyes.MainActivity
 import com.example.socialeyes.Model.Post
 import com.example.socialeyes.Model.User
 import com.example.socialeyes.R
@@ -45,6 +47,80 @@ class PostAdapter(private val mContext: Context,
         holder.description.text = post.getDescription()
 
         publisherInfo(holder.profileImage, holder.username, holder.publisher, post.getPublisher())
+        isLikes(post.getPostid(), holder.likeButton)
+        numberOfLikes(holder.likes, post.getPostid())
+
+        holder.likeButton.setOnClickListener {
+            if(holder.likeButton.tag == "Like")
+            {
+                FirebaseDatabase.getInstance().reference
+                    .child("Likes")
+                    .child(post.getPostid())
+                    .child(firebaseUser!!.uid)
+                    .setValue(true)
+            }
+            else
+            {
+                FirebaseDatabase.getInstance().reference
+                    .child("Likes")
+                    .child(post.getPostid())
+                    .child(firebaseUser!!.uid)
+                    .removeValue()
+
+                val intent = Intent(mContext, MainActivity::class.java)
+                mContext.startActivity(intent)
+            }
+        }
+    }
+
+    private fun numberOfLikes(likes: TextView, postid: String)
+    {
+        val LikesRef = FirebaseDatabase.getInstance().reference
+            .child("Likes").child(postid)
+
+        LikesRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError)
+            {
+                Toast.makeText(mContext,p0.message, Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onDataChange(p0: DataSnapshot)
+            {
+                if(p0.exists())
+                {
+                   likes.text = p0.childrenCount.toString() + " likes"
+                }
+            }
+        })
+    }
+
+    private fun isLikes(postid: String, likeButton: ImageView)
+    {
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+
+        val LikesRef = FirebaseDatabase.getInstance().reference
+            .child("Likes").child(postid)
+
+        LikesRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError)
+            {
+                Toast.makeText(mContext,p0.message, Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onDataChange(p0: DataSnapshot)
+            {
+                if(p0.child(firebaseUser!!.uid).exists())
+                {
+                    likeButton.setImageResource(R.drawable.heart_clicked)
+                    likeButton.tag = "Liked"
+                }
+                else
+                {
+                    likeButton.setImageResource(R.drawable.heart_not_clicked)
+                    likeButton.tag = "Like"
+                }
+            }
+        })
     }
 
     inner class ViewHolder(@NonNull itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -93,7 +169,7 @@ class PostAdapter(private val mContext: Context,
 
                     Picasso.get().load(user!!.getImage()).placeholder(R.drawable.profile).into(profileImage)
                     username.text = user.getUsername()
-                    publisher.text = user.getUsername()
+                    publisher.text = user.getFullname()
                 }
             }
 
