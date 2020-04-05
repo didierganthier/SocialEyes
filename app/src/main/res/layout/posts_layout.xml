@@ -104,7 +104,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="Description..."
-            android:textStyle="bold"
             android:textSize="15dp"
             android:textColor="@color/colorPrimary"/>
 
@@ -115,7 +114,6 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:text="Comments"
-            android:textStyle="bold"
             android:textSize="15dp"
             android:textColor="@color/colorPrimary"/>
 

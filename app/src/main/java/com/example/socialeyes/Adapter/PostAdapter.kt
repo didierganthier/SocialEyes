@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
+import com.example.socialeyes.CommentsActivity
 import com.example.socialeyes.MainActivity
 import com.example.socialeyes.Model.Post
 import com.example.socialeyes.Model.User
@@ -49,6 +50,7 @@ class PostAdapter(private val mContext: Context,
         publisherInfo(holder.profileImage, holder.username, holder.publisher, post.getPublisher())
         isLikes(post.getPostid(), holder.likeButton)
         numberOfLikes(holder.likes, post.getPostid())
+        getTotalComments(holder.comments, post.getPostid())
 
         holder.likeButton.setOnClickListener {
             if(holder.likeButton.tag == "Like")
@@ -71,6 +73,20 @@ class PostAdapter(private val mContext: Context,
                 mContext.startActivity(intent)
             }
         }
+
+        holder.commentButton.setOnClickListener {
+            val intent = Intent(mContext, CommentsActivity::class.java)
+            intent.putExtra("postId", post.getPostid())
+            intent.putExtra("publisherId",post.getPublisher())
+            mContext.startActivity(intent)
+        }
+
+        holder.comments.setOnClickListener {
+            val intent = Intent(mContext, CommentsActivity::class.java)
+            intent.putExtra("postId", post.getPostid())
+            intent.putExtra("publisherId",post.getPublisher())
+            mContext.startActivity(intent)
+        }
     }
 
     private fun numberOfLikes(likes: TextView, postid: String)
@@ -88,7 +104,42 @@ class PostAdapter(private val mContext: Context,
             {
                 if(p0.exists())
                 {
-                   likes.text = p0.childrenCount.toString() + " likes"
+                    if(p0.childrenCount.toString() == "1" || p0.childrenCount.toString() == "0")
+                    {
+                        likes.text = p0.childrenCount.toString() + " like"
+                    }
+                    else
+                    {
+                        likes.text = p0.childrenCount.toString() + " likes"
+                    }
+                }
+            }
+        })
+    }
+
+    private fun getTotalComments(comments: TextView, postid: String)
+    {
+        val commentsRef = FirebaseDatabase.getInstance().reference
+            .child("Comments").child(postid)
+
+        commentsRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError)
+            {
+                Toast.makeText(mContext,p0.message, Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onDataChange(p0: DataSnapshot)
+            {
+                if(p0.exists())
+                {
+                    if(p0.childrenCount.toString() == "1")
+                    {
+                        comments.text = "View " + p0.childrenCount.toString() + " comment"
+                    }
+                    else
+                    {
+                        comments.text = "View all " + p0.childrenCount.toString() + " comments"
+                    }
                 }
             }
         })
