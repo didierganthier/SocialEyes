@@ -36,7 +36,7 @@ class HomeFragment : Fragment()
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
 
-        var recyclerView: RecyclerView? = null
+        var recyclerView: RecyclerView
         recyclerView = view.findViewById(R.id.recycler_view_home)
         val linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.reverseLayout = true

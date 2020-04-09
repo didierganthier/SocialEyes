@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.annotation.NonNull
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.socialeyes.Fragments.PostDetailsFragment
 import com.example.socialeyes.Model.Post
 import com.example.socialeyes.R
 import com.squareup.picasso.Picasso
@@ -26,8 +28,14 @@ class MyImagesAdapter (private val mContext: Context, private val mPost: List<Po
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val post: Post = mPost[position]
-
         Picasso.get().load(post.getPostimage()).placeholder(R.drawable.profile).into(holder.postImage)
+
+        holder.postImage.setOnClickListener {
+            val editor = mContext.getSharedPreferences("PREFS",Context.MODE_PRIVATE).edit()
+            editor.putString("postId", post.getPostid())
+            editor.apply()
+            (mContext as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, PostDetailsFragment()).commit()
+        }
     }
 
     inner class ViewHolder(@NonNull itemView: View)
