@@ -9,7 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.socialeyes.AccountSettingsActivity
+import com.example.socialeyes.Adapter.MyImagesAdapter
+import com.example.socialeyes.Model.Post
 import com.example.socialeyes.Model.User
 import com.example.socialeyes.R
 import com.google.firebase.auth.FirebaseAuth
@@ -20,6 +25,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_profile.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * A simple [Fragment] subclass.
@@ -27,6 +34,9 @@ import kotlinx.android.synthetic.main.fragment_profile.view.*
 class ProfileFragment : Fragment() {
     private lateinit var profileId: String
     private lateinit var firebaseUser: FirebaseUser
+
+    var postList: List<Post>? = null
+    var myImagesAdapter: MyImagesAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +61,16 @@ class ProfileFragment : Fragment() {
         {
             checkFollowAndFollowingButtonStatus()
         }
+
+        var recyclerViewUploadImages: RecyclerView
+        recyclerViewUploadImages = view.findViewById(R.id.recycler_view_upload_pic)
+        recyclerViewUploadImages.setHasFixedSize(true)
+        val linearLayoutManager: LinearLayoutManager  = GridLayoutManager(context, 3)
+        recyclerViewUploadImages.layoutManager = linearLayoutManager
+
+        postList = ArrayList()
+        myImagesAdapter = context?.let { MyImagesAdapter(it, postList as ArrayList<Post>) }
+        recyclerViewUploadImages.adapter = myImagesAdapter
 
         view.edit_account_settings_btn.setOnClickListener {
             val getButtonText = view.edit_account_settings_btn.text.toString()
@@ -92,6 +112,7 @@ class ProfileFragment : Fragment() {
         getFollowers()
         getFollowings()
         userInfo()
+        myPhotos()
 
         return view
     }
@@ -169,6 +190,36 @@ class ProfileFragment : Fragment() {
                 }
             }
 
+        })
+    }
+
+    private fun myPhotos()
+    {
+        val postsRef = FirebaseDatabase.getInstance().reference.child("Posts")
+
+        postsRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                Toast.makeText(context, p0.message, Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onDataChange(p0: DataSnapshot)
+            {
+                if(p0.exists())
+                {
+                    (postList as ArrayList<Post>).clear()
+
+                    for(snapshot in p0.children)
+                    {
+                        val post = snapshot.getValue(Post::class.java)!!
+                        if(post.getPublisher().equals(profileId))
+                        {
+                            (postList as ArrayList<Post>).add(post)
+                        }
+                        Collections.reverse(postList)
+                        myImagesAdapter!!.notifyDataSetChanged()
+                    }
+                }
+            }
         })
     }
 
