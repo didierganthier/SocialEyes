@@ -13,7 +13,6 @@ SocialEyes is a creation from Didier Ganthier released under the MIT License (Ex
 ## Features
 
 The android app lets you:
-- Connect to your self-hosted wallabag instance or connect to your [wallabag.it](https://wallabag.it) account.
 - Supports wallabag 2.0 and higher.
 - Completely ad-free.
 - Increase and decrease the size of the font and also switch between a serif or sans-serif font for a more comfortable reading experience.
