@@ -13,22 +13,15 @@ SocialEyes is a creation from Didier Ganthier released under the MIT License (Ex
 ## Features
 
 The android app lets you:
-- Supports wallabag 2.0 and higher.
-- Completely ad-free.
-- Increase and decrease the size of the font and also switch between a serif or sans-serif font for a more comfortable reading experience.
-- Switch between numerous themes.
-- Possibility to cache images locally for offline reading.
-- Get articles read via Text-to-Speech feature.
-- Needs no special permissions on Android 6.0+.
+- Post new pictures
+- Like others pictures
+- Add comments
+- Delete posts
+- Edit posts
 
 ## Screenshots
 
-[<img src="/readme/Wallabag%20Reading%20List.png" align="left"
-width="200"
-    hspace="10" vspace="10">](/readme/Wallabag%20Reading%20List.png)
-[<img src="/readme/Wallabag%20Article%20View.png" align="center"
-width="200"
-    hspace="10" vspace="10">](/readme/Wallabag%20Article%20View.png)
+----
 
 ## Permissions
 
@@ -42,9 +35,8 @@ The "Run at startup" permission is only used if Auto-Sync feature is enabled and
 
 ## Contributing
 
-wallabag app is a free and open source project developed by volunteers. Any contributions are welcome. Here are a few ways you can help:
- * [Report bugs and make suggestions.](https://github.com/wallabag/android-app/issues)
- * [Translate the app](https://hosted.weblate.org/projects/wallabag/android-app/) (you don't have to create an account).
+SocialEyes app is a free and open source project developed by volunteers. Any contributions are welcome. Here are a few ways you can help:
+ * [Report bugs and make suggestions.](https://github.com/didierganthier/SocialEyes/issues)
  * Write some code. Please follow the code style used in the project to make a review process faster.
 
 ## License
